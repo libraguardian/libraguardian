@@ -280,6 +280,31 @@ def flow_entropy(true, est):
     return np.mean(all_entropy)
 
 
+def flow_cardinality(flow_table_segment, sketch_segment, ground_truth_segment_len):
+    cardinality = []
+    true_sum = []
+    e_sum = []
+    card_result = []
+    for flow_table_switch, sumaxske_switch, true_switch in zip(flow_table_segment, sketch_segment, ground_truth_segment_len):
+        for index, (flow, sumaxske, true) in enumerate(zip(flow_table_switch, sumaxske_switch, true_switch)):
+            if index == 1:
+                break
+            m = sumaxske.m
+            e = sumaxske.get_zero_count()
+            if e==0:
+                continue
+            card = m * math.log(m / e)
+            card += len(flow)
+            cardinality.append(card)
+            e_sum.append(e)
+            if true==0:
+                continue
+            card_result.append(np.abs(card - true) / true)
+            true_sum.append(true)
+
+    return np.mean(card_result)
+
+
 #!--------------------------------------------------------------------------max_interval
 def max_interval(true, estimate):
     are, aae = 0., 0.

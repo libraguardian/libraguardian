@@ -225,6 +225,8 @@ if __name__ == "__main__":
 
         entropy = flow_entropy(device_true_segment_result, entropy_segment[num])
 
+        cardinality = flow_cardinality(original_flow_table_segment[num], sketch_segment[num], ground_truth_segment_len)
+
         are_max, aae_max = max_interval(dict(true), dict(est_hasflow[num]))
 
         all_are_esti.append(are_esti)
@@ -238,14 +240,16 @@ if __name__ == "__main__":
         all_recall.append(recall)
         all_f1.append(f1)
         all_entropy.append(entropy)
+        all_cardinality.append(cardinality)
         all_are_max.append(are_max)
         all_aae_max.append(aae_max)
 
-    logging.info(
-        f"\n\nn_flows: {args.n_flows}, memory:{args.memory}, is_dht:{args.is_dht}, heavy_hitter_thres:{args.heavy_hitter_thres}, heavy_change_ratio:{args.heavy_change_ratio}")
-    logging.info(args)
-    logging.info(f"\n\n\t\t\testimate:\nare:{np.round(all_are_esti,5)} \naae:{np.round(all_aae_esti,5)}")
-    logging.info(f"\t\t\theavyhitter:\nare:{np.round(all_are_hit,5)} \naae:{np.round(all_aae_hit,5)}, \npre:{np.round(all_pre_hit,5)} \nrecall:{np.round(all_recall_hit,5)} \nf1:{np.round(all_f1_hit,5)}")
-    logging.info(f"\t\t\theavychange:\npre:{np.round(all_precision,5)} \nrecall:{np.round(all_recall,5)} \nf1:{np.round(all_f1,5)}")
-    logging.info(f"\t\t\tentropy:\n{np.round(all_entropy,5)}")
-    logging.info(f"\t\t\tmax_inter:\nare:{np.round(all_are_max,5)} \naae:{np.round(all_aae_max,5)}")
+    # logging.info(
+    #     f"\n\nn_flows: {args.n_flows}, memory:{args.memory}, is_dht:{args.is_dht}, heavy_hitter_thres:{args.heavy_hitter_thres}, heavy_change_ratio:{args.heavy_change_ratio}")
+    # logging.info(args)
+    # logging.info(f"\n\n\t\t\testimate:\nare:{np.round(all_are_esti,5)} \naae:{np.round(all_aae_esti,5)}")
+    # logging.info(f"\t\t\theavyhitter:\nare:{np.round(all_are_hit,5)} \naae:{np.round(all_aae_hit,5)}, \npre:{np.round(all_pre_hit,5)} \nrecall:{np.round(all_recall_hit,5)} \nf1:{np.round(all_f1_hit,5)}")
+    # logging.info(f"\t\t\theavychange:\npre:{np.round(all_precision,5)} \nrecall:{np.round(all_recall,5)} \nf1:{np.round(all_f1,5)}")
+    # logging.info(f"\t\t\tentropy:\n{np.round(all_entropy,5)}")
+    # logging.info(f"\t\t\tcardinality:\n{np.round(all_cardinality, 5)}")
+    # logging.info(f"\t\t\tmax_inter:\nare:{np.round(all_are_max,5)} \naae:{np.round(all_aae_max,5)}")
